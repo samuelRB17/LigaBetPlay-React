@@ -10,21 +10,34 @@ interface Ranking {
   points: number
   matchesPlayed: number
 }
+
+
+
+interface Estadistica {
+  position: number
+  name: string
+  value: number
+  appearances: number
+  contestantName: string
+  statName: string
+}
+
 type FiltroTipo = 'posiciones' | 'goleador' | 'asistencias' | 'amarillas' | 'atajadas'
  const filtros: FiltroTipo[] = ['posiciones', 'goleador', 'asistencias', 'amarillas', 'atajadas']
 
 function Home() {
   const [ranking, setRanking] = useState<Ranking[]>([]) // es
   const [title, setTitle] = useState('') // estado de titulo 
+  const [estaditicas, setEstadisticas] = useState('')
   const [filtro, setFiltro] = useState<FiltroTipo>('posiciones')
-  
+   const [busqueda, setBusqueda] = useState('')
 
-  // useeefct espera cambios para , peticion para haer cambios
+  // useeefct espera cambios para , peticion para hacer cambios
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch('https://raw.githubusercontent.com/sdtibata/dataliga/refs/heads/main/posiciones.json')
+         const res = await fetch(`https://raw.githubusercontent.com/sdtibata/dataliga/refs/heads/main/${filtro}.json`)
         const data = await res.json()
 
         setRanking(data.standings[0].ranking)
@@ -72,7 +85,14 @@ return (
             {onestat}
           </button>
         ))}
+
       </div>
+      <input
+        type="text"
+        placeholder="Buscar..."
+        value={busqueda}
+        onChange={(e) => setBusqueda(e.target.value)}
+      />
 
     <div className="tabla-container">
       <h2>{title}</h2>
