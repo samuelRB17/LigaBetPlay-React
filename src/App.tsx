@@ -14,6 +14,11 @@ function App() {
     <>
       <Router>
         <nav className="c-menu">
+          
+          <Link to="/Home">
+          Home
+          </Link>
+
           <Link to="/Favoritos">
           fav
           </Link>
